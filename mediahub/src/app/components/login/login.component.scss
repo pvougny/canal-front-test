@@ -1,0 +1,24 @@
+.app-login {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin: 100px auto 0;
+}
+
+.error-container {
+  height: 1em;
+  margin-bottom: 1em;
+
+  p {
+    margin: 0;
+    color: red;
+  }
+}
+
+.mat-form-field {
+  margin-bottom: 2em;
+
+  &.full-width {
+    width: 100%;
+  }
+}

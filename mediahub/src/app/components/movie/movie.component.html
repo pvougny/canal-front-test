@@ -1,0 +1,45 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span class="spacer"></span>
+  <span>{{ title$ | async }}</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="logout()" title="logout">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+<ng-container
+  *ngrxLet="{
+    error: error$ | async,
+    fields: fields$ | async,
+    loadingMovie: loadingMovie$ | async
+  } as data"
+>
+  <div class="container">
+    <mat-spinner *ngIf="data.loadingMovie === 'in_progress'"></mat-spinner>
+
+    <div class="error-container" *ngIf="data.error">
+      <p>{{ data.error }}</p>
+    </div>
+
+    <div class="content">
+      <table
+        *ngIf="!data.error && data.loadingMovie === 'success'"
+        mat-table
+        [dataSource]="data.fields!"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="key">
+          <th mat-cell *matCellDef="let field">{{ field["key"] }}</th>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <td mat-cell *matCellDef="let field">{{ field["value"] }}</td>
+        </ng-container>
+
+        <tr mat-row *matRowDef="let row; columns: ['key', 'value']"></tr>
+      </table>
+    </div>
+  </div>
+</ng-container>

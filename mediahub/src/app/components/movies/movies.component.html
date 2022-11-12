@@ -1,0 +1,104 @@
+<mat-toolbar color="primary">
+  <span>Mediahub</span>
+  <span class="spacer"></span>
+  <span>Movies</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="logout()" title="logout">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+<ng-container
+  *ngrxLet="{
+    error: error$ | async,
+    movies: movies$ | async,
+    loadingMovies: loadingMovies$ | async
+  } as data"
+>
+  <div class="container">
+    <div [formGroup]="form" *ngIf="!data.error">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Search</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input type="text" matInput formControlName="query" />
+        <button
+          *ngIf="form.value.query"
+          matSuffix
+          mat-icon-button
+          (click)="resetQuery()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Sort By</mat-label>
+        <mat-select formControlName="sortBy">
+          <mat-option *ngFor="let option of sortByOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-spinner *ngIf="data.loadingMovies === 'in_progress'"></mat-spinner>
+
+    <div class="error-container">
+      <p *ngIf="data.error">{{ data.error }}</p>
+      <p
+        *ngIf="
+          !data.error &&
+          data.movies?.length === 0 &&
+          data.loadingMovies === 'success'
+        "
+      >
+        No movie found for the current query.
+      </p>
+    </div>
+
+    <table
+      *ngIf="
+        data.movies &&
+        data.movies.length > 0 &&
+        data.loadingMovies === 'success'
+      "
+      mat-table
+      [dataSource]="data.movies"
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="Title" [sticky]="true">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let movie">
+          <a [routerLink]="movie.id">{{ movie["Title"] }}</a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Director" [sticky]="true">
+        <th mat-header-cell *matHeaderCellDef>Director</th>
+        <td mat-cell *matCellDef="let movie">{{ movie["Director"] }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Release Date" [sticky]="true">
+        <th mat-header-cell *matHeaderCellDef>Release Date</th>
+        <td mat-cell *matCellDef="let movie">
+          {{ movie["Release Date"] }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="IMDB Rating" [sticky]="true">
+        <th mat-header-cell *matHeaderCellDef>IMDB Rating</th>
+        <td mat-cell *matCellDef="let movie">{{ movie["IMDB Rating"] }}</td>
+      </ng-container>
+      <ng-container matColumnDef="IMDB Votes" [sticky]="true">
+        <th mat-header-cell *matHeaderCellDef>IMDB Votes</th>
+        <td mat-cell *matCellDef="let movie">{{ movie["IMDB Votes"] }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Rotten Tomatoes Rating" [sticky]="true">
+        <th mat-header-cell *matHeaderCellDef>Rotten Tomatoes Rating</th>
+        <td mat-cell *matCellDef="let movie">
+          {{ movie["Rotten Tomatoes Rating"] }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+</ng-container>

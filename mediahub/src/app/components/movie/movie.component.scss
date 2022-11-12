@@ -1,0 +1,27 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  padding: 1em;
+}
+
+.content {
+  width: 600px;
+  margin: auto;
+}
+
+.error-container {
+  p {
+    color: red;
+  }
+}
+
+.mat-table {
+  width: 100%;
+
+  th {
+    text-align: left;
+    padding: 0 1em;
+  }
+}

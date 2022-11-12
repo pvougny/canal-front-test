@@ -8,7 +8,7 @@ Votre Product Owner vous confie l'US suivante:
 > - Je veux pouvoir consulter tous les détails d'un film spécifique
 > - Je veux pouvoir reprendre rapidement ma recherche après avoir consulté les détails d'un film
 
-Vous devez fournir aux utilisateurs une interface web répondant aux besoins exprimés par le PO. 
+Vous devez fournir aux utilisateurs une interface web répondant aux besoins exprimés par le PO.
 Pour cela, vous avez accès à une API de recherche de films. Le test consiste à fournir une interface de recherche très simple qui exploite les données de cette API.
 
 Vous devrez prendre en compte les contraintes suivantes:
@@ -107,7 +107,7 @@ interface Movie {
 }
 ```
 
-#### Exemple complet 
+#### Exemple complet
 
 ```shell
 curl --request GET \
@@ -213,4 +213,17 @@ curl --request GET \
 	"IMDB Votes": 7147,
 	"id": 1058
 }
+```
+
+## Lancer l'application frontend
+
+```shell
+# Ouvrir le répertoire
+cd mediahub
+
+# Installer les dépendances
+npm install
+
+# Lancer l'application
+npm start
 ```

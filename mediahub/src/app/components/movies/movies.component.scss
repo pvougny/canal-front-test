@@ -1,0 +1,25 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  padding: 1em;
+}
+
+.mat-form-field {
+  width: 300px;
+
+  + .mat-form-field {
+    margin-left: 1em;
+  }
+}
+
+.error-container {
+  p {
+    color: red;
+  }
+}
+
+.mat-table {
+  width: 100%;
+}

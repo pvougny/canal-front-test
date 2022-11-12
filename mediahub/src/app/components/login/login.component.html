@@ -1,0 +1,49 @@
+<div
+  class="app-login"
+  *ngrxLet="{ error: error$ | async, loading: loading$ | async } as data"
+>
+  <h1>Mediahub</h1>
+
+  <div class="error-container">
+    <p *ngIf="data.error">
+      {{ data.error }}
+    </p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Username</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="username"
+        placeholder="Canal-plus"
+      />
+      <mat-hint>Canal-plus</mat-hint>
+      <mat-error *ngIf="form.controls.username.errors?.['required']">
+        Username is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password" />
+      <mat-hint>Super-secret</mat-hint>
+      <mat-error *ngIf="form.controls.password.errors?.['required']">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      *ngIf="!data.loading"
+      type="submit"
+      mat-flat-button
+      color="primary"
+      [disabled]="form.invalid"
+    >
+      Connexion
+    </button>
+  </form>
+
+  <mat-spinner *ngIf="data.loading" [diameter]="36"></mat-spinner>
+</div>
